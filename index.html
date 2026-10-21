@@ -31,7 +31,7 @@ async function dec(raw){
   const k=await crypto.subtle.importKey("raw",raw,"AES-GCM",false,["decrypt"]);
   return new TextDecoder().decode(await crypto.subtle.decrypt({name:"AES-GCM",iv:b64(P.iv)},k,b64(P.ct)));
 }
-function show(html){document.open();document.write(html);document.close();}
+function show(html){const go=()=>{document.open();document.write(html);document.close();};if(document.readyState==="complete")go();else addEventListener("load",go,{once:true});}
 // "Remember" stores the derived key for this build's salt; after each daily rebuild the password is asked once again.
 (async()=>{
   try{const s=JSON.parse(localStorage.getItem(KEY)||"null");
